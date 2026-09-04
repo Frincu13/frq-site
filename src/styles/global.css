@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+/*
+  Brand tokens. Culorile și tipografia vin din identitatea FRQ folosită în
+  deck: fundal aproape negru, un singur accent roșu, Archivo pentru text și
+  Archivo Black pentru titluri.
+*/
+@theme {
+  --color-ink: #0a0a0c;
+  --color-panel: #111114;
+  --color-line: #24242b;
+  --color-brand: #ed1b2f;
+  --color-brand-dim: #7a0d18;
+  --color-muted: #9aa0a9;
+  --color-muted-2: #6b7078;
+
+  --font-sans: "Archivo", ui-sans-serif, system-ui, "Segoe UI", Arial,
+    sans-serif;
+  --font-display: "Archivo Black", "Archivo", "Arial Black", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Titlurile sunt elementul principal de design: mari, compacte, uppercase. */
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.03;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /*
+    Bara oblică roșie este semnătura vizuală din deck. O folosim ca accent
+    de secțiune, nu ca ornament repetat la nesfârșit.
+  */
+  .skew-bar {
+    display: block;
+    height: 0.5rem;
+    width: 3.5rem;
+    background-color: var(--color-brand);
+    transform: skewX(-24deg);
+  }
+
+  .kicker {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+  }
+
+  .rule {
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* Slot marcat pentru o fotografie care încă nu există. */
+  .photo-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 2px dashed var(--color-line);
+    background-image: repeating-linear-gradient(
+      45deg,
+      #0e0e11,
+      #0e0e11 22px,
+      #0b0b0d 22px,
+      #0b0b0d 44px
+    );
+    color: var(--color-muted-2);
+    text-align: center;
+    padding: 1.5rem;
+  }
+}
