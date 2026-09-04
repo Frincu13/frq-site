@@ -7,22 +7,25 @@ const hasForm = c.contact.formspreeEndpoint !== "";
 const mailto = `mailto:${c.contact.email}?subject=${encodeURIComponent(
   c.contact.form.mailtoSubject,
 )}`;
+
+// Prefixează căile din `public/` cu base-ul curent (rădăcină sau subcale).
+const asset = (path: string) =>
+  `${import.meta.env.BASE_URL}/${path}`.replace(/\/{2,}/g, "/");
 ---
 
-<Base
-  lang={c.lang}
-  title={c.meta.title}
-  description={c.meta.description}
-  siteUrl={c.meta.siteUrl}
->
+<Base lang={c.lang} title={c.meta.title} description={c.meta.description}>
   <!-- ======================= HEADER ======================= -->
   <header class="border-b border-line">
     <div
       class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5"
     >
-      <a href="/" class="flex items-center" aria-label={c.brand.name}>
+      <a
+        href={import.meta.env.BASE_URL}
+        class="flex items-center"
+        aria-label={c.brand.name}
+      >
         <img
-          src={c.brand.logo}
+          src={asset(c.brand.logo)}
           alt={c.brand.name}
           width="112"
           height="34"
@@ -97,7 +100,7 @@ const mailto = `mailto:${c.contact.email}?subject=${encodeURIComponent(
           {
             c.photoSlots.hero.src ? (
               <img
-                src={c.photoSlots.hero.src}
+                src={asset(c.photoSlots.hero.src)}
                 alt={c.photoSlots.hero.alt}
                 class="w-full object-cover"
                 style={`aspect-ratio:${c.photoSlots.hero.ratio}`}
@@ -209,7 +212,7 @@ const mailto = `mailto:${c.contact.email}?subject=${encodeURIComponent(
           {
             c.photoSlots.activation.src ? (
               <img
-                src={c.photoSlots.activation.src}
+                src={asset(c.photoSlots.activation.src)}
                 alt={c.photoSlots.activation.alt}
                 class="w-full object-cover"
                 style={`aspect-ratio:${c.photoSlots.activation.ratio}`}

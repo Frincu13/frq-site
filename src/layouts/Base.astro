@@ -5,10 +5,23 @@ interface Props {
   lang: string;
   title: string;
   description: string;
-  siteUrl: string;
 }
 
-const { lang, title, description, siteUrl } = Astro.props;
+const { lang, title, description } = Astro.props;
+
+// Prefixează o cale din `public/` cu base-ul curent, ca să funcționeze și
+// în rădăcină, și pe o subcale de tip GitHub Pages.
+const asset = (path: string) =>
+  `${import.meta.env.BASE_URL}/${path}`.replace(/\/{2,}/g, "/");
+
+// Canonical corect pe orice host, calculat din adresa reală a paginii.
+const canonical = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : undefined;
+
+// Previzualizarea de pe GitHub Pages nu trebuie indexată, ca să nu concureze
+// site-ul de producție în rezultatele căutării.
+const isPreview = Astro.site?.hostname.endsWith("github.io") ?? false;
 ---
 
 <!doctype html>
@@ -18,16 +31,17 @@ const { lang, title, description, siteUrl } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={siteUrl} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {isPreview && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={siteUrl} />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary_large_image" />
 
     <meta name="theme-color" content="#0a0a0c" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={asset("favicon.svg")} type="image/svg+xml" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,7 +53,7 @@ const { lang, title, description, siteUrl } = Astro.props;
   <body>
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-brand focus:px-4 focus:py-2 focus:text-white"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand focus:px-4 focus:py-2 focus:text-white"
       >Sari la conținut</a
     >
     <slot />

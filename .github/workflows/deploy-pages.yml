@@ -1,0 +1,60 @@
+name: Deploy pe GitHub Pages
+
+# GitHub Pages nu construiește singur un proiect Astro, știe doar Jekyll.
+# Workflow-ul acesta rulează build-ul și publică folderul dist.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# O singură publicare odată, fără să anuleze una în curs.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Pe Pages site-ul stă la user.github.io/frq-site/, deci are nevoie de
+      # base. Pe domeniul propriu aceste variabile lipsesc, iar configul cade
+      # înapoi pe rădăcină.
+      PUBLIC_SITE_URL: https://frincu13.github.io
+      PUBLIC_BASE_PATH: /frq-site
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
