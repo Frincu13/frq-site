@@ -35,6 +35,7 @@ export const ro = {
   nav: [
     { label: "Ce oferim", href: "#oferta" },
     { label: "Pentru cine", href: "#pentru-cine" },
+    { label: "Context", href: "#context" },
     { label: "Cum funcționează", href: "#proces" },
     { label: "Sezonul 2027", href: "#sezon" },
     { label: "Contact", href: "#contact" },
@@ -45,11 +46,27 @@ export const ro = {
     title: "Un show car monopost, colantabil integral cu grafica ta.",
     intro:
       "FRQ este un proiect de brand activation din București, construit în jurul unui monopost 1:1 de tip formulă, replică de expunere, nerulantă. Îl ducem acolo unde publicul tău se află deja: în mall-uri, în campusuri de birouri, la festivaluri sau la sediul tău.",
-    // Diferențierea centrală. Formulată ca fapt, fără superlative.
+    // Diferențierea centrală. Comparație factuală, fără superlative și fără
+    // "singurul din România", care ar fi o afirmație greu de susținut.
     differentiator:
-      "Monoposturile de expunere disponibile în România se închiriază de regulă de la echipe, cu livery-ul lor. Al nostru este liber pentru branding, pe toată suprafața.",
+      "Monoposturile de Formula 1 care ajung în România vin cu logourile echipelor. Al nostru vine cu al tău.",
     ctaPrimary: { label: "Discutăm un proiect", href: "#contact" },
     ctaSecondary: { label: "Vezi ce oferim", href: "#oferta" },
+  },
+
+  /**
+   * Imaginea de concept a standului.
+   *
+   * Este un render propriu, nu o fotografie. Mașina din render este neutră,
+   * fără însemne de echipă. Panoul din fundal conține mărci inventate, ca
+   * exemplu de perete de sponsori. Legenda spune explicit amândouă lucrurile,
+   * ca nimeni să nu creadă că sunt clienți reali sau o activare deja făcută.
+   */
+  showcase: {
+    src: "/stand-concept.jpg",
+    alt: "Concept de stand FRQ într-un mall: monopost pe podium, simulator, roata premiilor și perete de sponsori",
+    caption:
+      "Concept de stand, vizualizare. Mărcile de pe panou sunt inventate, ca exemplu. Nu este o activare realizată.",
   },
 
   offer: {
@@ -101,6 +118,55 @@ export const ro = {
     ],
   },
 
+  /**
+   * Context de piață.
+   *
+   * Fiecare exemplu de mai jos este verificat și are sursă publică. Nu sunt
+   * clienți FRQ și nu sugerăm nicio legătură cu noi. Rolul secțiunii este să
+   * arate că formatul funcționează deja în România și de ce accesul la el e
+   * limitat. Dacă adaugi exemple noi, adaugă și sursa.
+   */
+  market: {
+    kicker: "Context",
+    title: "Ce se întâmplă deja în România.",
+    intro:
+      "Expunerea unui monopost aduce public. Nu e o presupunere, s-a întâmplat deja, în piețe centrale și în mall-uri:",
+    items: [
+      {
+        text: "Banca Transilvania și Mastercard au adus monopostul McLaren în Piața George Enescu din București.",
+        source: {
+          label: "Banca Transilvania",
+          href: "https://blog.bancatransilvania.ro/evenimente/monopostolul-de-la-formula-1-mclaren-ajunge-la-bucuresti",
+        },
+      },
+      {
+        text: "Monopostul Scuderia Ferrari a fost expus în București, la Atrium Palas în Iași, la Iulius Town în Timișoara și în Cluj-Napoca.",
+        source: {
+          label: "Newsweek România",
+          href: "https://newsweek.ro/actualitate/universul-formula-1-ajunge-in-proiectele-iulius-din-iasi-timisoara-si-cluj-napoca",
+        },
+      },
+      {
+        text: "Tot un monopost Ferrari a fost expus în Piața Mare din Sibiu.",
+        source: {
+          label: "City FM",
+          href: "https://city-fm.ro/posts/premiera-in-sibiu-un-monopost-ferrari-de-formula-1-a-fost-expus-in-piata-mare/",
+        },
+      },
+      {
+        text: "Red Bull a organizat un show run în Piața Constituției, cu peste 50.000 de spectatori.",
+        source: {
+          label: "Red Bull",
+          href: "https://www.redbull.com/ro-ro/events/showrun-bucuresti",
+        },
+      },
+    ],
+    conclusion:
+      "Toate au ajuns aici prin parteneriate cu echipe de Formula 1: BT cu McLaren, Bitdefender cu Ferrari, Red Bull cu propria echipă. Mașinile vin cu logourile echipelor, iar la astfel de parteneriate au acces puține companii. Aici este diferența: monopostul nostru poartă grafica ta.",
+    disclaimer:
+      "Exemplele de mai sus sunt evenimente publice ale altor companii. Nu sunt proiecte FRQ și nu implică vreo legătură cu noi.",
+  },
+
   process: {
     kicker: "Cum funcționează",
     title: "De la brief la livrare.",
@@ -135,7 +201,8 @@ export const ro = {
       "FRQ este în pre-lansare. Mașina este în curs de achiziție, iar primele activări sunt planificate pentru sezonul 2027. Nu avem încă activări realizate și nu prezentăm rezultate pe care nu le-am produs.",
       "Căutăm un număr mic de parteneri fondatori care intră înainte de primul sezon. Pentru ei, condițiile se stabilesc acum și rămân valabile pe durata primului an, iar prioritatea la calendar și la suprafața de branding se dă în ordinea semnării.",
     ],
-    cta: { label: "Cere condițiile de partener fondator", href: "#contact" },
+    // Îndemnul trebuie citit ca "sună acum", nu ca "revino anul viitor".
+    cta: { label: "Discutăm acum calendarul 2027", href: "#contact" },
   },
 
   contact: {
@@ -171,6 +238,14 @@ export const ro = {
       mailtoSubject: "Cerere FRQ",
       note: "Datele din formular le folosim doar ca să îți răspundem.",
     },
+
+    // Text afișat cât timp nu există endpoint de formular. Nu conține
+    // instrucțiuni tehnice: un formular care pare că trimite, dar nu trimite,
+    // este cel mai prost lucru posibil pe o pagină al cărei scop e contactul.
+    mailtoFallback: {
+      body: "Scrie-ne direct pe e-mail sau sună. Răspundem în cel mult o zi lucrătoare.",
+      button: "Scrie un e-mail",
+    },
   },
 
   /**
@@ -182,12 +257,6 @@ export const ro = {
    * completezi `src` aici. Slotul devine automat imagine.
    */
   photoSlots: {
-    hero: {
-      src: "",
-      alt: "Monopostul FRQ, colantat cu grafica partenerului",
-      label: "Foto monopost, colantat",
-      ratio: "3 / 2",
-    },
     activation: {
       src: "",
       alt: "Activare FRQ într-o locație cu trafic",

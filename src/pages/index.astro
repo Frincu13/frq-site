@@ -53,9 +53,9 @@ const asset = (path: string) =>
 
   <main id="main">
     <!-- ======================= HERO ======================= -->
-    <section class="mx-auto max-w-6xl px-6 pt-16 pb-20 md:pt-24 md:pb-28">
+    <section class="mx-auto max-w-6xl px-6 pt-16 pb-16 md:pt-24 md:pb-20">
       <div class="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-8">
           <p
             class="inline-flex items-center gap-2.5 border border-line px-3 py-1.5 text-xs tracking-[0.18em] text-muted uppercase"
           >
@@ -96,30 +96,20 @@ const asset = (path: string) =>
           </div>
         </div>
 
-        <div class="lg:col-span-5">
-          {
-            c.photoSlots.hero.src ? (
-              <img
-                src={asset(c.photoSlots.hero.src)}
-                alt={c.photoSlots.hero.alt}
-                class="w-full object-cover"
-                style={`aspect-ratio:${c.photoSlots.hero.ratio}`}
-                loading="eager"
-              />
-            ) : (
-              <div
-                class="photo-slot"
-                style={`aspect-ratio:${c.photoSlots.hero.ratio}`}
-              >
-                <span class="text-xs font-bold tracking-[0.2em] uppercase">
-                  {c.photoSlots.hero.label}
-                </span>
-                <span class="text-xs">{c.photoSlots.hero.ratio}</span>
-              </div>
-            )
-          }
-        </div>
       </div>
+
+      <figure class="mt-16">
+        <img
+          src={asset(c.showcase.src)}
+          alt={c.showcase.alt}
+          class="w-full border border-line object-cover"
+          loading="eager"
+          decoding="async"
+        />
+        <figcaption class="mt-3 text-sm text-muted-2">
+          {c.showcase.caption}
+        </figcaption>
+      </figure>
     </section>
 
     <!-- ======================= OFERTA ======================= -->
@@ -182,6 +172,48 @@ const asset = (path: string) =>
             ))
           }
         </div>
+      </div>
+    </section>
+
+    <!-- ======================= CONTEXT DE PIAȚĂ ======================= -->
+    <section id="context" class="rule scroll-mt-20">
+      <div class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+        <span class="skew-bar" aria-hidden="true"></span>
+        <p class="kicker mt-6">{c.market.kicker}</p>
+        <h2 class="mt-4 max-w-3xl text-3xl sm:text-4xl lg:text-5xl">
+          {c.market.title}
+        </h2>
+        <p class="mt-7 max-w-3xl text-lg leading-relaxed text-muted">
+          {c.market.intro}
+        </p>
+
+        <ul class="mt-10 max-w-4xl">
+          {
+            c.market.items.map((item) => (
+              <li class="flex flex-col gap-2 border-t border-line py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <span class="leading-relaxed text-white/90">{item.text}</span>
+                <a
+                  href={item.source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="shrink-0 text-xs tracking-[0.16em] text-muted-2 uppercase underline decoration-line underline-offset-4 transition-colors hover:text-brand"
+                >
+                  {item.source.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p
+          class="mt-10 max-w-3xl border-l-2 border-brand bg-panel py-5 pr-5 pl-5 text-lg leading-relaxed"
+        >
+          {c.market.conclusion}
+        </p>
+
+        <p class="mt-6 max-w-3xl text-sm text-muted-2">
+          {c.market.disclaimer}
+        </p>
       </div>
     </section>
 
@@ -403,20 +435,22 @@ const asset = (path: string) =>
               ) : (
                 <div class="border border-line bg-panel p-8 md:p-10">
                   <p class="text-lg leading-relaxed text-muted">
-                    Scrie-ne direct pe e-mail. Răspundem în aceeași zi
-                    lucrătoare.
+                    {c.contact.mailtoFallback.body}
                   </p>
-                  <a
-                    href={mailto}
-                    class="mt-7 inline-block bg-brand px-7 py-3.5 text-sm font-bold tracking-wider text-white uppercase transition-opacity hover:opacity-90"
-                  >
-                    Scrie un e-mail
-                  </a>
-                  <p class="mt-6 text-sm text-muted-2">
-                    Formularul cu inbox propriu se activează completând
-                    <code class="text-muted">formspreeEndpoint</code> în
-                    <code class="text-muted">src/content/ro.ts</code>.
-                  </p>
+                  <div class="mt-7 flex flex-wrap gap-4">
+                    <a
+                      href={mailto}
+                      class="inline-block bg-brand px-7 py-3.5 text-sm font-bold tracking-wider text-white uppercase transition-opacity hover:opacity-90"
+                    >
+                      {c.contact.mailtoFallback.button}
+                    </a>
+                    <a
+                      href={`tel:${c.contact.phoneHref}`}
+                      class="inline-block border border-line px-7 py-3.5 text-sm font-bold tracking-wider text-white uppercase transition-colors hover:border-white/40"
+                    >
+                      {c.contact.phone}
+                    </a>
+                  </div>
                 </div>
               )
             }
